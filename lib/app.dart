@@ -6,7 +6,8 @@ import 'core/constants/app_strings.dart';
 import 'core/router/app_router.dart';
 import 'core/session/session_cubit.dart';
 import 'core/theme/app_theme.dart';
-import 'features/login/data/login_repository.dart';
+import 'features/device_setup/data/bluetooth_repository.dart';
+import 'features/device_setup/data/session_repository.dart';
 
 /// The root of the app. Repositories and app-wide cubits are created here,
 /// once, so the whole app can use them.
@@ -17,10 +18,15 @@ class SafeGuardApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        // To use the real backend later, change MockLoginRepository() to
-        // ApiLoginRepository() on this one line.
-        RepositoryProvider<LoginRepository>(
-          create: (context) => MockLoginRepository(),
+        // Fake Bluetooth scan. To try the other screens, pass
+        // outcome: MockScanOutcome.empty or MockScanOutcome.failure.
+        RepositoryProvider<BluetoothRepository>(
+          create: (context) => MockBluetoothRepository(),
+        ),
+        // Fake backend. To use the real backend, change this to
+        // ApiSessionRepository() (from api_session_repository.dart).
+        RepositoryProvider<SessionRepository>(
+          create: (context) => MockSessionRepository(),
         ),
       ],
       child: BlocProvider(

@@ -9,7 +9,6 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../bloc/login_cubit.dart';
 import '../bloc/login_state.dart';
-import '../data/login_repository.dart';
 import '../widgets/login_form_card.dart';
 import '../widgets/login_header.dart';
 import '../widgets/secured_connection_badge.dart';
@@ -23,8 +22,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          LoginCubit(loginRepository: context.read<LoginRepository>()),
+      create: (context) => LoginCubit(),
       child: const LoginView(),
     );
   }
@@ -35,20 +33,12 @@ class LoginPage extends StatelessWidget {
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
-  // Runs once each time the status changes. Used for navigation and
-  // snackbars, which should not be inside build().
+  // Runs once each time the status changes. Navigation belongs here, not
+  // inside build().
   void _onStatusChanged(BuildContext context, LoginState state) {
     if (state.status == LoginStatus.success && state.worker != null) {
       context.read<SessionCubit>().signIn(state.worker!);
       context.go(AppRoutes.scan);
-    } else if (state.status == LoginStatus.failure) {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            content: Text(state.errorMessage ?? AppStrings.somethingWentWrong),
-          ),
-        );
     }
   }
 

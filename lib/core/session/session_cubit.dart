@@ -1,14 +1,21 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'session_state.dart';
+import 'shift_model.dart';
 import 'worker_model.dart';
 
-/// Remembers who is signed in, for the whole app.
-///
-/// The state is the signed-in worker, or null when nobody is signed in.
-class SessionCubit extends Cubit<WorkerModel?> {
-  SessionCubit() : super(null);
+/// Remembers who is signed in and their active shift, for the whole app.
+class SessionCubit extends Cubit<SessionState> {
+  SessionCubit() : super(const SessionState());
 
-  void signIn(WorkerModel worker) => emit(worker);
+  /// Called after the login screen.
+  void signIn(WorkerModel worker) => emit(SessionState(worker: worker));
 
-  void signOut() => emit(null);
+  /// Called after the backend has started the shift session.
+  void startShift(ShiftModel shift) {
+    emit(SessionState(worker: state.worker, shift: shift));
+  }
+
+  /// Called when the shift ends. Clears everything.
+  void signOut() => emit(const SessionState());
 }

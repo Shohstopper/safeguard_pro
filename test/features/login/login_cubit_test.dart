@@ -4,85 +4,35 @@ import 'package:safeguard_pro/core/constants/app_strings.dart';
 import 'package:safeguard_pro/core/session/worker_model.dart';
 import 'package:safeguard_pro/features/login/bloc/login_cubit.dart';
 import 'package:safeguard_pro/features/login/bloc/login_state.dart';
-import 'package:safeguard_pro/features/login/data/login_repository.dart';
-
-/// A repository that always breaks in an unexpected way.
-class _BrokenLoginRepository implements LoginRepository {
-  @override
-  Future<WorkerModel> login({
-    required String name,
-    required String employeeId,
-    required String location,
-  }) async {
-    throw Exception('network down');
-  }
-}
 
 void main() {
-  const worker = WorkerModel(
-    name: 'Ahmad Al-Rashidi',
-    employeeId: 'SW-001',
-    location: 'Site A — Zone 3',
-  );
-
-  LoginCubit buildCubit() =>
-      LoginCubit(loginRepository: MockLoginRepository(delay: Duration.zero));
-
   test('starts in the initial state', () {
-    expect(buildCubit().state, const LoginState());
+    expect(LoginCubit().state, const LoginState());
   });
 
   blocTest<LoginCubit, LoginState>(
-    'success: emits loading, then success with the worker',
-    build: buildCubit,
+    'success: valid fields give a worker (with spaces trimmed)',
+    build: LoginCubit.new,
     act: (cubit) => cubit.login(
-      name: ' Ahmad Al-Rashidi ',
-      employeeId: 'sw-001',
-      location: 'Site A — Zone 3',
+      name: ' Ahmed Mohamed ',
+      employeeId: ' W001 ',
+      location: 'Floor 10 - Zone A',
     ),
     expect: () => [
-      const LoginState(status: LoginStatus.loading),
-      const LoginState(status: LoginStatus.success, worker: worker),
-    ],
-  );
-
-  blocTest<LoginCubit, LoginState>(
-    'failure: emits loading, then failure when the employee is not found',
-    build: buildCubit,
-    act: (cubit) => cubit.login(
-      name: 'Ahmad Al-Rashidi',
-      employeeId: MockLoginRepository.failingEmployeeId,
-      location: 'Site A — Zone 3',
-    ),
-    expect: () => [
-      const LoginState(status: LoginStatus.loading),
       const LoginState(
-        status: LoginStatus.failure,
-        errorMessage: AppStrings.employeeNotFound,
+        status: LoginStatus.success,
+        worker: WorkerModel(
+          name: 'Ahmed Mohamed',
+          employeeId: 'W001',
+          location: 'Floor 10 - Zone A',
+        ),
       ),
     ],
   );
 
   blocTest<LoginCubit, LoginState>(
-    'failure: shows a general message for unexpected errors',
-    build: () => LoginCubit(loginRepository: _BrokenLoginRepository()),
-    act: (cubit) => cubit.login(
-      name: 'Ahmad Al-Rashidi',
-      employeeId: 'SW-001',
-      location: 'Site A — Zone 3',
-    ),
-    expect: () => [
-      const LoginState(status: LoginStatus.loading),
-      const LoginState(
-        status: LoginStatus.failure,
-        errorMessage: AppStrings.somethingWentWrong,
-      ),
-    ],
-  );
-
-  blocTest<LoginCubit, LoginState>(
-    'empty fields: shows field errors and does not call the repository',
-    build: buildCubit,
+    'empty fields: shows a Required error on each field',
+    build: LoginCubit.new,
     act: (cubit) => cubit.login(name: '', employeeId: '', location: '  '),
     expect: () => [
       const LoginState(
@@ -94,15 +44,10 @@ void main() {
   );
 
   blocTest<LoginCubit, LoginState>(
-    'wrong employee ID format: shows the format error',
-    build: buildCubit,
-    act: (cubit) => cubit.login(
-      name: 'Ahmad Al-Rashidi',
-      employeeId: '12345',
-      location: 'Site A — Zone 3',
-    ),
-    expect: () => [
-      const LoginState(employeeIdError: AppStrings.employeeIdFormat),
-    ],
+    'one empty field: only that field shows an error',
+    build: LoginCubit.new,
+    act: (cubit) =>
+        cubit.login(name: 'Ahmed Mohamed', employeeId: '', location: 'Zone A'),
+    expect: () => [const LoginState(employeeIdError: AppStrings.fieldRequired)],
   );
 }

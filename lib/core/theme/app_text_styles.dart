@@ -86,6 +86,94 @@ abstract final class AppTextStyles {
     color: AppColors.textDim,
   );
 
+  // Device setup screens
+
+  static const TextStyle headerTitle = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle headerSubtitle = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 11,
+    color: AppColors.textMuted,
+  );
+
+  static const TextStyle scanTitle = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 23,
+    fontWeight: FontWeight.w800,
+    letterSpacing: -0.8,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle sectionTitle = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 21,
+    fontWeight: FontWeight.w700,
+    letterSpacing: -0.63,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle successTitle = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    letterSpacing: -0.96,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle bodyMuted = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 13,
+    height: 1.6,
+    color: AppColors.textMuted,
+  );
+
+  static const TextStyle cardTitle = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle cardSubtitle = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 11,
+    color: AppColors.textMuted,
+  );
+
+  static const TextStyle tileTitle = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle summaryLabel = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 10,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.8,
+    color: AppColors.textMuted,
+  );
+
+  static const TextStyle summaryValue = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle secondaryButton = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+  );
+
   static const TextStyle snackBar = TextStyle(
     fontFamily: fontFamily,
     fontSize: 13,

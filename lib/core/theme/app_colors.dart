@@ -28,10 +28,29 @@ abstract final class AppColors {
   static const Color onPrimary = Colors.white;
   static const Color spinnerTrack = Color(0x4DFFFFFF);
 
+  // Blue highlights (Bluetooth badge, selected smartwatch)
+  static const Color primarySoft = Color(0x1F2D7EF8);
+  static const Color primarySoftBorder = Color(0x402D7EF8);
+  static const Color primaryActive = Color(0x2E2D7EF8);
+  static const Color primaryActiveBorder = Color(0x6B3B8EFF);
+  static const Color primaryActiveGlow = Color(0x332D7EF8);
+  static const Color selectedBackground = Color(0x242D7EF8);
+  static const Color selectedIconBackground = Color(0x382D7EF8);
+  static const Color selectedRing = Color(0x1A2D7EF8);
+
+  // Neutral overlays on the dark background
+  static const Color subtleFill = Color(0x0BFFFFFF);
+  static const Color subtleFillStrong = Color(0x0FFFFFFF);
+  static const Color radioBorder = Color(0x38FFFFFF);
+  static const Color secondaryButtonBorder = Color(0x29FFFFFF);
+
   // Status
   static const Color success = Color(0xFF22C55E);
   static const Color successBackground = Color(0x1222C55E);
   static const Color successBorder = Color(0x2622C55E);
+  static const Color successSoft = Color(0x2422C55E);
+  static const Color successRing = Color(0x4722C55E);
+  static const Color successGlow = Color(0x2122C55E);
   static const Color danger = Color(0xFFEF4444);
   static const Color warning = Color(0xFFF59E0B);
 

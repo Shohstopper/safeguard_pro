@@ -16,7 +16,6 @@ class LoginTextField extends StatelessWidget {
     required this.controller,
     this.errorText,
     this.isCompact = false,
-    this.enabled = true,
     this.textInputAction = TextInputAction.next,
     this.textCapitalization = TextCapitalization.none,
     this.onSubmitted,
@@ -28,7 +27,6 @@ class LoginTextField extends StatelessWidget {
   final TextEditingController controller;
   final String? errorText;
   final bool isCompact;
-  final bool enabled;
   final TextInputAction textInputAction;
   final TextCapitalization textCapitalization;
   final ValueChanged<String>? onSubmitted;
@@ -46,7 +44,6 @@ class LoginTextField extends StatelessWidget {
         const SizedBox(height: AppSpacing.space8),
         TextField(
           controller: controller,
-          enabled: enabled,
           style: textStyle,
           textInputAction: textInputAction,
           textCapitalization: textCapitalization,
